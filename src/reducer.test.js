@@ -1,6 +1,6 @@
 import reducer from './reducer';
 
-import { updateRestaurantInfo } from './action';
+import { addRestaurants, updateRestaurantInfo } from './action';
 
 describe('reducer', () => {
   describe('updateRestaurantInfo', () => {
@@ -24,6 +24,32 @@ describe('reducer', () => {
     it('레스토랑 주소를 저장한다', () => {
       const { restaurantInfo } = reducer(previousState, updateRestaurantInfo({ name: 'address', value: '광교' }));
       expect(restaurantInfo.address).toBe('광교');
+    });
+  });
+  describe('addRestaurants', () => {
+    function handleRestaurantInfo(restaurantInfo) {
+      const initialState = {
+        newId: 50,
+        restaurants: [],
+        restaurantInfo: {
+          title: '',
+          address: '',
+          category: '',
+        },
+      };
+
+      return reducer({
+        ...initialState,
+        restaurantInfo: {
+          ...restaurantInfo,
+        },
+      }, addRestaurants());
+    }
+    it('input이 하나라도 비어있을 경우 아무 일도 일어나지 않는다', () => {
+      const { restaurants } = handleRestaurantInfo({
+        title: '',
+      });
+      expect(restaurants.length).toBe(0);
     });
   });
 });

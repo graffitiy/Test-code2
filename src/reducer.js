@@ -10,7 +10,11 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   if (action.type === 'addRestaurants') {
-    return state;
+    const values = Object.values(state.restaurantInfo);
+    const isAllValuesEmpty = values.every((value) => value === '');
+    if (isAllValuesEmpty) {
+      return state;
+    }
   }
   if (action.type === 'updateRestaurantInfo') {
     return {
