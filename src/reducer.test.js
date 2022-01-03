@@ -45,11 +45,25 @@ describe('reducer', () => {
         },
       }, addRestaurants());
     }
+
     it('input이 하나라도 비어있을 경우 아무 일도 일어나지 않는다', () => {
       const { restaurants } = handleRestaurantInfo({
         title: '',
       });
       expect(restaurants.length).toBe(0);
+    });
+
+    it('레스토랑 목록 추가', () => {
+      const { restaurants } = handleRestaurantInfo({
+        title: '알단테',
+        category: '양식',
+        address: '광교',
+      });
+      expect(restaurants.length).toBe(1);
+      expect(restaurants[0].title).toBe('알단테');
+      expect(restaurants[0].address).toBe('광교');
+      expect(restaurants[0].category).toBe('양식');
+      expect(restaurants[0].id).toBe(50);
     });
   });
 });
