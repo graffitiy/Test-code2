@@ -12,17 +12,26 @@ describe('reducer', () => {
       },
     };
     it('레스토랑 이름을 저장한다', () => {
-      const { restaurantInfo } = reducer(previousState, updateRestaurantInfo({ name: 'title', value: '알단테' }));
+      const { restaurantInfo } = reducer(
+        previousState,
+        updateRestaurantInfo({ name: 'title', value: '알단테' })
+      );
       expect(restaurantInfo.title).toBe('알단테');
     });
 
     it('레스토랑 카테고리를 저장한다', () => {
-      const { restaurantInfo } = reducer(previousState, updateRestaurantInfo({ name: 'category', value: '양식' }));
+      const { restaurantInfo } = reducer(
+        previousState,
+        updateRestaurantInfo({ name: 'category', value: '양식' })
+      );
       expect(restaurantInfo.category).toBe('양식');
     });
 
     it('레스토랑 주소를 저장한다', () => {
-      const { restaurantInfo } = reducer(previousState, updateRestaurantInfo({ name: 'address', value: '광교' }));
+      const { restaurantInfo } = reducer(
+        previousState,
+        updateRestaurantInfo({ name: 'address', value: '광교' })
+      );
       expect(restaurantInfo.address).toBe('광교');
     });
   });
@@ -38,32 +47,38 @@ describe('reducer', () => {
         },
       };
 
-      return reducer({
-        ...initialState,
-        restaurantInfo: {
-          ...restaurantInfo,
+      return reducer(
+        {
+          ...initialState,
+          restaurantInfo: {
+            ...restaurantInfo,
+          },
         },
-      }, addRestaurants());
+        addRestaurants()
+      );
     }
-
-    it('input이 하나라도 비어있을 경우 아무 일도 일어나지 않는다', () => {
-      const { restaurants } = handleRestaurantInfo({
-        title: '',
+    context('input이 하나라도 비어있으면', () => {
+      it('아무 일도 일어나지 않는다', () => {
+        const { restaurants } = handleRestaurantInfo({
+          title: '',
+        });
+        expect(restaurants.length).toBe(0);
       });
-      expect(restaurants.length).toBe(0);
     });
 
-    it('레스토랑 목록 추가', () => {
-      const { restaurants } = handleRestaurantInfo({
-        title: '알단테',
-        category: '양식',
-        address: '광교',
+    context('모든 input이 입력됐으면', () => {
+      it('레스토랑 목록이 추가된다', () => {
+        const { restaurants } = handleRestaurantInfo({
+          title: '알단테',
+          category: '양식',
+          address: '광교',
+        });
+        expect(restaurants.length).toBe(1);
+        expect(restaurants[0].title).toBe('알단테');
+        expect(restaurants[0].address).toBe('광교');
+        expect(restaurants[0].category).toBe('양식');
+        expect(restaurants[0].id).toBe(50);
       });
-      expect(restaurants.length).toBe(1);
-      expect(restaurants[0].title).toBe('알단테');
-      expect(restaurants[0].address).toBe('광교');
-      expect(restaurants[0].category).toBe('양식');
-      expect(restaurants[0].id).toBe(50);
     });
   });
 });
