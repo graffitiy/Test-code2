@@ -12,8 +12,8 @@ describe('reducer', () => {
       },
     };
     it('레스토랑 이름을 저장한다', () => {
-      const { restaurantInfo } = reducer(previousState, updateRestaurantInfo({ name: 'title', value: '알단테' }));
-      expect(restaurantInfo.title).toBe('알단테');
+      const { restaurantInfo } = reducer(previousState, updateRestaurantInfo({ name: 'name', value: '알단테' }));
+      expect(restaurantInfo.name).toBe('알단테');
     });
 
     it('레스토랑 카테고리를 저장한다', () => {
@@ -32,7 +32,7 @@ describe('reducer', () => {
         newId: 50,
         restaurants: [],
         restaurantInfo: {
-          title: '',
+          name: '',
           address: '',
           category: '',
         },
@@ -47,7 +47,7 @@ describe('reducer', () => {
     context('input이 하나라도 비어있으면', () => {
       it('아무 일도 일어나지 않는다', () => {
         const { restaurants } = handleAddRestaurant({
-          title: '',
+          name: '',
         });
         expect(restaurants.length).toBe(0);
       });
@@ -55,12 +55,12 @@ describe('reducer', () => {
 
     context('모든 input이 입력됐으면', () => {
       it('레스토랑 목록이 추가된다', () => {
-        const { restaurantInfo: { title, address, category } } = handleAddRestaurant({
-          title: '알단테',
+        const { restaurantInfo: { name, address, category } } = handleAddRestaurant({
+          name: '알단테',
           category: '양식',
           address: '광교',
         });
-        expect(title).toBe('');
+        expect(name).toBe('');
         expect(address).toBe('');
         expect(category).toBe('');
       });
