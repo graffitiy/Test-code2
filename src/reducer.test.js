@@ -67,6 +67,17 @@ describe('reducer', () => {
         expect(restaurants[0].id).toBe(50);
       });
 
+      it('추가된 후 모든 input이 초기화된다', () => {
+        const { restaurantInfo: { name, address, category } } = handleAddRestaurant({
+          name: '알단테',
+          category: '양식',
+          address: '광교',
+        });
+        expect(name).toBe('');
+        expect(address).toBe('');
+        expect(category).toBe('');
+      });
+
       describe('action이 없을 경우', () => {
         const initialState = {
           newId: 50,
