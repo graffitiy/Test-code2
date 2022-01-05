@@ -55,14 +55,40 @@ describe('reducer', () => {
 
     context('모든 input이 입력됐으면', () => {
       it('레스토랑 목록이 추가된다', () => {
-        const { restaurantInfo: { name, address, category } } = handleAddRestaurant({
+        const { restaurants } = handleAddRestaurant({
           name: '알단테',
           category: '양식',
           address: '광교',
         });
-        expect(name).toBe('');
-        expect(address).toBe('');
-        expect(category).toBe('');
+        expect(restaurants.length).toBe(1);
+        expect(restaurants[0].name).toBe('알단테');
+        expect(restaurants[0].address).toBe('광교');
+        expect(restaurants[0].category).toBe('양식');
+        expect(restaurants[0].id).toBe(50);
+      });
+
+      describe('action이 없을 경우', () => {
+        const initialState = {
+          newId: 50,
+          restaurants: [],
+          restaurantInfo: {
+            name: '',
+            address: '',
+            category: '',
+          },
+        };
+        context('state가 존재함', () => {
+          it('state를 반환한다', () => {
+            const state = reducer({ newId: 1 }, { type: 'hi' });
+            expect(state.newId).toBe(1);
+          });
+        });
+        context('state가 없음', () => {
+          it('초기 state를 반환한다', () => {
+            const state = reducer(undefined, { type: 'hi' });
+            expect(state).toEqual(initialState);
+          });
+        });
       });
     });
   });
